@@ -40,7 +40,7 @@ public class Product {
 
 	private String imageMimeType;
 	
-
+	@NotNull
 	private String name;
 	
 	/*
@@ -67,31 +67,22 @@ public class Product {
 		this.id = id;
 	}
 
+	@ManyToMany(mappedBy = "products")
+	private Set<Category> categories = new HashSet<>();
 
 
-	/**
-	 * TODO these two methods are here just to make Task04 compilable. After you are finished
-	 * with TASK 02 you should delete this empty method
-	 * @param kitchen
-	 */
-	public void addCategory(Category kitchen) {	
+	public void removeCategory(Category category)	{
+		this.categories.remove(category);
 	}
-	public List<Product> getCategories() {
-		return null;
+
+	public void addCategory(Category c) {
+		categories.add(c);
+		c.addProduct(this);
 	}
-	//TODO after you are done with task02 you can uncomment this methods
-//	public void removeCategory(Category category)	{
-//		this.categories.remove(category);
-//	}
-//	
-//	public void addCategory(Category c) {
-//		categories.add(c);
-//		c.addProduct(this);
-//	}
-//
-//	public Set<Category> getCategories() {
-//		return Collections.unmodifiableSet(categories);
-//	}
+
+	public Set<Category> getCategories() {
+		return Collections.unmodifiableSet(categories);
+	}
 	
 
 
